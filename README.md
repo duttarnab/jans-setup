@@ -16,7 +16,8 @@ Just two steps:
 
 2. Execute installer
 
-    `python3 install.py`
+    `python3 install.py` or run `python3 install.py --args=-t` to load test data 
+   along with installation
 
 Uninstalling Janssen Server
 ------------------------
