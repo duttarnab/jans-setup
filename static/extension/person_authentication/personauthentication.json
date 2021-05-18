@@ -22,7 +22,7 @@
   "configurationProperties": [
     {
 		"value1":"redirect_url",
-		"value2":"https://bank-op.gluu.org/oxauth/authorize.htm?scope=openid+profile+email+user_name&acr_values=basic&response_type=code&redirect_uri=https%3A%2F%2Fbank.gluu.org%2Fjans-auth%2Fpostlogin.htm&nonce=72fc1a52-25a7-4293-929d-b61b8a05c9c4&client_id=29c7a980-a223-4f5e-b598-2b99e093d328",
+		"value2":"https://bank-op.gluu.org/oxauth/authorize.htm?scope=openid+profile+email+user_name&acr_values=basic&response_type=code&redirect_uri=https%3A%2F%2Fbank.testingluuk8.org%2Fjans-auth%2Fpostlogin.htm&nonce=72fc1a52-25a7-4293-929d-b61b8a05c9c4&client_id=29c7a980-a223-4f5e-b598-2b99e093d328",
 		"hide":false,
 		"description":"redirect to consent app"
 	},
