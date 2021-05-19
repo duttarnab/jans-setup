@@ -130,18 +130,6 @@ class ClientRegistration(ClientRegistrationType):
         else: 
         	self.aud = configurationAttributes.get("aud").getValue2() 
 
-        if (not configurationAttributes.containsKey("issuingaca")):
-	        print "Client registration. Initialization failed. Property issuingaca is not specified"
-	        return False
-        else: 
-        	self.issuingaca = configurationAttributes.get("issuingaca").getValue2() 
-  
-        if (not configurationAttributes.containsKey("signingaca")):
-	        print "Client registration. Initialization failed. Property signingaca is not specified"
-	        return False
-        else: 
-        	self.signingaca = configurationAttributes.get("signingaca").getValue2() 
-
         print "Client registration. Initialized successfully"
 
         return True
