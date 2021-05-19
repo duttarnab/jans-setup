@@ -59,86 +59,85 @@ class ClientRegistration(ClientRegistrationType):
         print "Client registration. Initialization"
  
         if (not configurationAttributes.containsKey("keyId")):
-	        print "Client registration. Initialization. Property keyId is not specified"
+	        print "Client registration. Initialization failed. Property keyId is not specified"
 	        return False
         else: 
         	self.keyId = configurationAttributes.get("keyId").getValue2() 
             
         if (not configurationAttributes.containsKey("clientScopes")):
-	        print "Client registration. Initialization. Property clientScopes is not specified"
+	        print "Client registration. Initialization failed. Property clientScopes is not specified"
 	        return False
         else: 
         	self.clientScopes = configurationAttributes.get("clientScopes").getValue2() 
 
         if (not configurationAttributes.containsKey("signingCert")):
-	        print "Client registration. Initialization. Property signingCert is not specified"
+	        print "Client registration. Initialization failed. Property signingCert is not specified"
 	        return False
         else: 
         	self.signingCert = configurationAttributes.get("signingCert").getValue2() 
 
         if (not configurationAttributes.containsKey("signingKey")):
-	        print "Client registration. Initialization. Property signingKey is not specified"
+	        print "Client registration. Initialization failed. Property signingKey is not specified"
 	        return False
         else: 
         	self.signingKey = configurationAttributes.get("signingKey").getValue2() 
         
         if (not configurationAttributes.containsKey("transportKeyStore")):
-	        print "Client registration. Initialization. Property transportKeyStore is not specified"
+	        print "Client registration. Initialization failed. Property transportKeyStore is not specified"
 	        return False
         else: 
         	self.transportKeyStore = configurationAttributes.get("transportKeyStore").getValue2() 
 
         if (not configurationAttributes.containsKey("transportKeyStorePassword")):
-	        print "Client registration. Initialization. Property transportKeyStorePassword is not specified"
+	        print "Client registration. Initialization failed. Property transportKeyStorePassword is not specified"
 	        return False
         else: 
         	self.transportKeyStorePassword = configurationAttributes.get("transportKeyStorePassword").getValue2() 
 
-
-	if (not configurationAttributes.containsKey("trustKeyStore")):
-	        print "Client registration. Initialization. Property trustKeyStore is not specified"
+        if (not configurationAttributes.containsKey("trustKeyStore")):
+	        print "Client registration. Initialization failed. Property trustKeyStore is not specified"
 	        return False
         else: 
         	self.trustKeyStore = configurationAttributes.get("trustKeyStore").getValue2() 
 
         if (not configurationAttributes.containsKey("trustKeyStorePassword")):
-	        print "Client registration. Initialization. Property trustKeyStorePassword is not specified"
+	        print "Client registration. Initialization failed. Property trustKeyStorePassword is not specified"
 	        return False
         else: 
         	self.trustKeyStorePassword = configurationAttributes.get("trustKeyStorePassword").getValue2() 
 
         if (not configurationAttributes.containsKey("jwks_endpoint")):
-	        print "Client registration. Initialization. Property jwks_endpoint is not specified"
+	        print "Client registration. Initialization failed. Property jwks_endpoint is not specified"
 	        return False
         else: 
         	self.jwks_endpoint = configurationAttributes.get("jwks_endpoint").getValue2() 
             
         if (not configurationAttributes.containsKey("tokenUrl")):
-	        print "Client registration. Initialization. Property tokenUrl is not specified"
+	        print "Client registration. Initialization failed. Property tokenUrl is not specified"
 	        return False
         else: 
         	self.tokenUrl = configurationAttributes.get("tokenUrl").getValue2() 
 
         if (not configurationAttributes.containsKey("tppUrl")):
-	        print "Client registration. Initialization. Property tppUrl is not specified"
+	        print "Client registration. Initialization failed. Property tppUrl is not specified"
 	        return False
         else: 
         	self.tppUrl = configurationAttributes.get("tppUrl").getValue2() 
 
         if (not configurationAttributes.containsKey("aud")):
-	        print "Client registration. Initialization. Property aud is not specified"
+	        print "Client registration. Initialization failed. Property aud is not specified"
 	        return False
         else: 
         	self.aud = configurationAttributes.get("aud").getValue2() 
 
         if (not configurationAttributes.containsKey("issuingaca")):
-	        print "Client registration. Initialization. Property issuingaca is not specified"
+	        print "Client registration. Initialization failed. Property issuingaca is not specified"
 	        return False
         else: 
         	self.issuingaca = configurationAttributes.get("issuingaca").getValue2() 
   
         if (not configurationAttributes.containsKey("signingaca")):
-	        print "Client registration. Initialization. Property signingaca is not specified"
+	        print "Client registration. Initialization failed. Property signingaca is not specified"
 	        return False
         else: 
         	self.signingaca = configurationAttributes.get("signingaca").getValue2() 
