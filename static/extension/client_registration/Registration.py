@@ -118,30 +118,18 @@ class ClientRegistration(ClientRegistrationType):
 	        return False
         else: 
         	self.tokenUrl = configurationAttributes.get("tokenUrl").getValue2() 
-            
-            
+
         if (not configurationAttributes.containsKey("tppUrl")):
 	        print "Client registration. Initialization. Property tppUrl is not specified"
 	        return False
         else: 
         	self.tppUrl = configurationAttributes.get("tppUrl").getValue2() 
-        
-        print "Client registration. Initialized successfully"
-        
+
         if (not configurationAttributes.containsKey("aud")):
 	        print "Client registration. Initialization. Property aud is not specified"
 	        return False
         else: 
         	self.aud = configurationAttributes.get("aud").getValue2() 
-       
-
-        if (not configurationAttributes.containsKey("rootCert")):
-	        print "Client registration. Initialization. Property rootCert is not specified"
-	        return False
-        else: 
-        	self.rootCert = configurationAttributes.get("rootCert").getValue2() 
-              
-        print "Client registration. Initialized successfully"
 
         if (not configurationAttributes.containsKey("issuingaca")):
 	        print "Client registration. Initialization. Property issuingaca is not specified"
@@ -154,11 +142,9 @@ class ClientRegistration(ClientRegistrationType):
 	        return False
         else: 
         	self.signingaca = configurationAttributes.get("signingaca").getValue2() 
-  
-  
+
         print "Client registration. Initialized successfully"
 
-        
         return True
 
     def destroy(self, configurationAttributes):
