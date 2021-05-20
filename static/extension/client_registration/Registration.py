@@ -130,6 +130,14 @@ class ClientRegistration(ClientRegistrationType):
         else: 
         	self.aud = configurationAttributes.get("aud").getValue2() 
 
+
+        cnOfAuthServer = self.getCN_of_AS()
+        valid = self.validateSoftwareStatement(cnOfAuthServer)
+        
+        if valid == False:
+             print "Client registration. Registration failed. Invalid software statement of AS. CN - %s" %cnOfAuthServer 
+             return False
+
         print "Client registration. Initialized successfully"
 
         return True
@@ -144,10 +152,7 @@ class ClientRegistration(ClientRegistrationType):
 
         cert = CertUtils.x509CertificateFromPem(configurationAttributes.get("certProperty").getValue1())
         cn = CertUtils.getCN(cert)
-        valid = self.validateSoftwareStatement(cn)
-        if valid == False:
-             print "Invalid software statement"
-             return False
+        
         print "Client registration. cn: " + cn
         client.setDn("inum=" + cn + ",ou=clients,o=jans")
 
@@ -356,4 +361,20 @@ class ClientRegistration(ClientRegistrationType):
                         return False
 
                 return True
+
+
+    def getCN_of_AS(self ) : 
+               try:
+	                keyStore = KeyStore.getInstance("PKCS12")
+                        pwdArray = [x for x in self.transportKeyStorePassword]
+                        keyStore.load( FileInputStream(self.transportKeyStore), pwdArray)
+                        alias = String( keyStore.aliases().nextElement())
+		        cert =  keyStore.getCertificate(alias)
+		        softwareStatementId = CertUtils.getCN(cert)
+		        print "CN of AS-%s" % softwareStatementId
+		        return softwareStatementId
+               except:
+                        print "Client Registration. Failed to get CN of AS from the transport keystore. Exception: ", sys.exc_info()[1]
+                        return None
+
     
