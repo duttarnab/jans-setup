@@ -217,7 +217,7 @@ class ClientRegistration(ClientRegistrationType):
 				postData.append('&')
 			postData.append(URLEncoder.encode(param.getKey(), "UTF-8"))
 			postData.append('=')
-			postData.append(URLEncoder.encode(String(param.getValue()), "UTF-8"))
+			postData.append(URLEncoder.encode(String(param.getValue()), "UTF-8").replace("+", "%20"))
 		print "Post data: "+postData.toString()
 		return postData.toString()
 
@@ -230,21 +230,6 @@ class ClientRegistration(ClientRegistrationType):
 	sslContext = SSLContexts.custom().loadKeyMaterial(keyStore,   pwdArray).loadTrustMaterial( File(self.trustKeyStore), trustPwdArray).build()
 	return sslContext	
 
-    def verifyRoles1(self, accessToken, softwareStatementId) :
-		try :
-			sslContext = self.getSslContext()
-			httpClient = HttpClients.custom().setSSLContext(sslContext).build()
-			get = HttpGet(self.tppUrl+"?filter="+ URLEncoder.encode(self.buildFilter(softwareStatementId)) + "&attributes=totalResults")
-			get.setHeader("Authorization", "Bearer " + accessToken)
-			response = httpClient.execute(get)
-			print(response.getStatusLine())
-			jsonResponse = EntityUtils.toString(response.getEntity())
-			object = JSONObject(jsonResponse)
-			total = int(object.get("totalResults"))
-			return True if total > 0 else False
-		except:
-			print "Client registration. Failed to verifyRoles: %s" %(sys.exc_info()[1])
-			return False
 
     def buildFilter(self, softwareStatementId) :
 		#filter = "(urn:openbanking:softwarestatement:1.0:SoftwareStatements[Id eq \"" + softwareStatementId
