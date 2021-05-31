@@ -174,10 +174,12 @@ class PropertiesUtils(SetupUtils):
                     break
                 else:
                     print("Please enter valid email address")
-            
+
             Config.jans_max_mem = self.getPrompt("Enter maximum RAM for applications in MB", str(Config.jans_max_mem))
 
             self.prompt_for_rdbm()
+
+            Config.staticKid = self.getPrompt("Enter Openbanking static kid")
 
             use_external_key_prompt = input('Use external key? [Y|n] : ')
             Config.use_external_key = not use_external_key_prompt.lower().startswith('n')

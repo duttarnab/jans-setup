@@ -85,4 +85,7 @@ def get_setup_options():
     if base.argsp.no_external_key:
         setupOptions['use_external_key'] = False
 
+    if base.argsp.static_kid:
+        setupOptions['staticKid'] = base.argsp.static_kid
+
     return setupOptions
