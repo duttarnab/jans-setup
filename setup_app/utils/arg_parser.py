@@ -41,7 +41,9 @@ def arg_parser():
     parser.add_argument('-ob-key-fn', help="Openbanking key filename")
     parser.add_argument('-ob-cert-fn', help="Openbanking certificate filename")
     parser.add_argument('-ob-alias', help="Openbanking key alias")
-
+    parser.add_argument('-static-kid', help="Openbanking static kid")
+    
+    
     argsp = parser.parse_args()
 
     return argsp
