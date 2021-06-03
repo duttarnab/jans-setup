@@ -166,11 +166,14 @@ class ClientRegistration(ClientRegistrationType):
         dnOfIntrospectionScript = "inum=CABA-2222,ou=scripts,o=jans"
         client.getAttributes().getIntrospectionScripts().add(dnOfIntrospectionScript)
 
-	staticConfiguration = CdiUtil.bean(StaticConfiguration)
-        inum = cn+"_"+str(UUID.randomUUID())
-        clientsBaseDN = staticConfiguration.getBaseDn().getClients()
-        client.setDn("inum=" + inum + "," + clientsBaseDN)
-        client.setClientId(inum)
+	#commenting out unique client_id
+        #staticConfiguration = CdiUtil.bean(StaticConfiguration)
+        #inum = cn+"_"+str(UUID.randomUUID())
+        #clientsBaseDN = staticConfiguration.getBaseDn().getClients()
+        #client.setDn("inum=" + inum + "," + clientsBaseDN)
+        #client.setClientId(inum)
+
+	client.setClientId(cn)
         client.setJwksUri(Jwt.parse(registerRequest.getSoftwareStatement()).getClaims().getClaimAsString("org_jwks_endpoint"))
         
         # scopes must be mapped to the client automatically in the DCR script
