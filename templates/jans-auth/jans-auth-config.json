@@ -303,5 +303,6 @@
     "deviceAuthzRequestExpiresIn": 1800,
     "deviceAuthzTokenPollInterval": 5,
     "deviceAuthzResponseTypeToProcessAuthz": "code",
-    "staticKid": "%(staticKid)s"
+    "staticKid": "%(staticKid)s",
+	"forceOfflineAccessScopeToEnableRefreshToken" : false
 }
