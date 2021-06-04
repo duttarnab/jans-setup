@@ -165,12 +165,21 @@ class ClientRegistration(ClientRegistrationType):
         dnOfIntrospectionScript = "inum=CABA-2222,ou=scripts,o=jans"
         client.getAttributes().getIntrospectionScripts().add(dnOfIntrospectionScript)
 
-	staticConfiguration = CdiUtil.bean(StaticConfiguration)
-        inum = cn+"_"+str(UUID.randomUUID())
-        clientsBaseDN = staticConfiguration.getBaseDn().getClients()
-        client.setDn("inum=" + inum + "," + clientsBaseDN)
-        client.setClientId(inum)
+	client.setClientId(cn)
         client.setJwksUri(Jwt.parse(registerRequest.getSoftwareStatement()).getClaims().getClaimAsString("org_jwks_endpoint"))
+                
+        # scopes must be mapped to the client automatically in the DCR script
+	# These can be trusted because the client has been vetted by OBIE
+        # https://github.com/JanssenProject/jans-setup/issues/32
+        scopeService = CdiUtil.bean(ScopeService)
+        scopeArr = []
+        for s in registerRequest.getScope().toArray() :
+                scopeObj = scopeService.getScopeById(String(s))
+                scopeDn = scopeObj.getDn()
+                scopeArr.append(scopeDn)
+        
+        client.setScopes(scopeArr)
+
         
         return True
   
