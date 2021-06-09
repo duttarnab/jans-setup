@@ -11,7 +11,6 @@ from io.jans.util import StringHelper
 from io.jans.as.model.crypto import  AuthCryptoProvider
 from io.jans.as.model.crypto.signature import SignatureAlgorithm
 from io.jans.as.server.service.net import HttpService
-from io.jans.as.server.service import ScopeService;
 from java.io import File
 from java.io import FileInputStream
 from java.io import FileReader
@@ -166,16 +165,9 @@ class ClientRegistration(ClientRegistrationType):
         dnOfIntrospectionScript = "inum=CABA-2222,ou=scripts,o=jans"
         client.getAttributes().getIntrospectionScripts().add(dnOfIntrospectionScript)
 
-	#commenting out unique client_id
-        #staticConfiguration = CdiUtil.bean(StaticConfiguration)
-        #inum = cn+"_"+str(UUID.randomUUID())
-        #clientsBaseDN = staticConfiguration.getBaseDn().getClients()
-        #client.setDn("inum=" + inum + "," + clientsBaseDN)
-        #client.setClientId(inum)
-
 	client.setClientId(cn)
         client.setJwksUri(Jwt.parse(registerRequest.getSoftwareStatement()).getClaims().getClaimAsString("org_jwks_endpoint"))
-        
+                
         # scopes must be mapped to the client automatically in the DCR script
 	# These can be trusted because the client has been vetted by OBIE
         # https://github.com/JanssenProject/jans-setup/issues/32
@@ -187,6 +179,7 @@ class ClientRegistration(ClientRegistrationType):
                 scopeArr.append(scopeDn)
         
         client.setScopes(scopeArr)
+
         
         return True
   

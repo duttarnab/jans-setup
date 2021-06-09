@@ -48,7 +48,7 @@ class UpdateToken(UpdateTokenType):
 			jsonWebResponse.getClaims().setClaim("openbanking_intent_id", openbanking_intent_id)
 			
 			#regular claims        
-			#jsonWebResponse.getClaims().setClaim("sub", openbanking_intent_id)
+			jsonWebResponse.getClaims().setClaim("sub", openbanking_intent_id)
 
 			print "Update token script. After modify idToken: %s" % jsonWebResponse
 		
