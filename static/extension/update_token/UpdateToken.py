@@ -52,6 +52,8 @@ class UpdateToken(UpdateTokenType):
 
 			print "Update token script. After modify idToken: %s" % jsonWebResponse
 		
+			# Use this blog to implement how RT claims can be retained. https://github.com/GluuFederation/oxAuth/wiki/Retain-access-token-claim
+
 			return True
 		except:
 	                print "update token failure" , sys.exc_info()[1]
