@@ -19,7 +19,7 @@
     {"value1":"keyId","value2":"GkwIzWy88xWSlcWnLiEc8ip9s2M","hide":false,"description":"Used in SSA Validation, kid used while encoding a JWT sent to token URL"}, 
     {"value1":"signingCert","value2":"/etc/certs/ob-ext-signing.crt","hide":false,"description":"Used in SSA Validation, location of cert used for signing"}, 
     {"value1":"signingKey","value2":"/etc/certs/ob-ext-signing.key","hide":false,"description":"Used in SSA Validation, location of key used for signing"}, 
-    {"value1":"trustKeyStore","value2":"/etc/certs/ob_transport_trust.p12","hide":false,"description":"Used in SSA Validation, Trust store"}, 
+    {"value1":"trustKeyStore","value2":"/etc/certs/ob-transport-truststore.p12","hide":false,"description":"Used in SSA Validation, Trust store"}, 
     {"value1":"trustKeyStorePassword","value2":"changeit","hide":false,"description":"Used in SSA Validation, Trust store Password, currently plaintext, but should be encrypted"}, 
     {"value1":"transportKeyStore","value2":"/etc/certs/ob-transport.pkcs12","hide":false,"description":"Used in SSA validation, a .p12 file presented by AS to the token URL"}, 
     {"value1":"transportKeyStorePassword","value2":"changeit","hide":false,"description":"Used in SSA validation, password to .p12 file presented by AS to the token URL"}, 
