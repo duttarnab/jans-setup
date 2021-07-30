@@ -8,7 +8,7 @@
     "clientInfoEndpoint":"https://%(hostname)s/jans-auth/restv1/clientinfo",
     "checkSessionIFrame":"https://%(hostname)s/jans-auth/opiframe.htm",
     "endSessionEndpoint":"https://%(hostname)s/jans-auth/restv1/end_session",
-    "jwksUri":"https://keystore.openbankingtest.org.uk/0014H00001lFE7dQAG/axV5umCvTMBMjPwjFQgEvb.jwks",
+    "jwksUri":"https://%(hostname)s/jans-auth/restv1/jwks",
     "registrationEndpoint":"https://%(hostname)s/jans-auth/restv1/register",
     "openIdDiscoveryEndpoint":"https://%(hostname)s/.well-known/webfinger",
     "openIdConfigurationEndpoint":"https://%(hostname)s/.well-known/openid-configuration",
@@ -68,6 +68,33 @@
     ],
     "defaultSubjectType": "pairwise",
     "keySignWithSameKeyButDiffAlg": true,
+    "authorizationSigningAlgValuesSupported":[
+        "HS256",
+        "HS384",
+        "HS512",
+        "RS256",
+        "RS384",
+        "RS512",
+        "ES256",
+        "ES384",
+        "ES512",
+        "ES512",
+        "PS256",
+        "PS384",
+        "PS512"
+    ],
+    "authorizationEncryptionAlgValuesSupported":[
+        "RSA1_5",
+        "RSA-OAEP",
+        "A128KW",
+        "A256KW"
+    ],
+    "authorizationEncryptionEncValuesSupported":[
+        "A128CBC+HS256",
+        "A256CBC+HS512",
+        "A128GCM",
+        "A256GCM"
+    ],
     "userInfoSigningAlgValuesSupported":[
     ],
     "userInfoEncryptionAlgValuesSupported":[
