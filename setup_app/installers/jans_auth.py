@@ -32,7 +32,6 @@ class JansAuthInstaller(JettyInstaller):
 
         self.json_scripts = os.path.join(Config.outputFolder, 'scripts.json')
         self.json_config = os.path.join(self.output_folder, 'configuration.json')
-        self.json_clients = os.path.join(self.output_folder, 'clients.json')
         self.oxauth_config_json = os.path.join(self.output_folder, 'jans-auth-config.json')
         self.oxauth_static_conf_json = os.path.join(self.templates_folder, 'jans-auth-static-conf.json')
         self.oxauth_error_json = os.path.join(self.templates_folder, 'jans-auth-errors.json')
@@ -57,12 +56,6 @@ class JansAuthInstaller(JettyInstaller):
         if not Config.get('admin_inum'):
             Config.admin_inum = str(uuid.uuid4())
 
-        self.check_clients([('oxauth_client_id', '1001.')])
-        
-        if not Config.get('oxauthClient_pw'):
-            Config.oxauthClient_pw = self.getPW()
-            Config.oxauthClient_encoded_pw = self.obscure(Config.oxauthClient_pw)
-
         self.logIt("Generating OAuth openid keys", pbar=self.service_name)
         sig_keys = 'RS256 RS384 RS512 ES256 ES384 ES512 PS256 PS384 PS512'
         enc_keys = 'RSA1_5 RSA-OAEP'
@@ -82,12 +75,10 @@ class JansAuthInstaller(JettyInstaller):
         Config.templateRenderingDict['oxauth_error'] = json.dumps(self.readFile(self.oxauth_error_json))
         Config.templateRenderingDict['oxauth_openid_key'] = json.dumps(self.readFile(self.oxauth_openid_jwks_fn))
 
-
         self.renderTemplateInOut(self.json_scripts, Config.templateFolder, Config.outputFolder)
         self.renderTemplateInOut(self.json_config, self.templates_folder, self.output_folder)
-        self.renderTemplateInOut(self.json_clients, self.templates_folder, self.output_folder)
 
-        self.dbUtils.import_templates([self.json_config, self.json_clients, self.json_scripts])
+        self.dbUtils.import_templates([self.json_config, self.json_scripts])
 
     def genRandomString(self, N):
         return ''.join(random.SystemRandom().choice(string.ascii_lowercase
