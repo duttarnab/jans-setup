@@ -158,5 +158,5 @@ class ConfigApiInstaller(SetupUtils, BaseInstaller):
         self.renderTemplateInOut(self.application_properties_tmp, self.templates_folder, self.output_folder, pystring=True)
         self.copyFile(os.path.join(self.output_folder, 'application.properties'), self.conf_dir)
         self.dbUtils.import_templates(self.load_files)
-
+        self.write_webapps_xml()
 
