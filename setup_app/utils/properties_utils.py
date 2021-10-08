@@ -125,6 +125,15 @@ class PropertiesUtils(SetupUtils):
         if not Config.encode_salt:
             Config.encode_salt = self.getPW() + self.getPW()
 
+        if not Config.encode_passw:
+            Config.encode_passw = self.getPW() + self.getPW()
+
+        if not Config.encode_iv:
+            Config.encode_iv = self.getPW() + self.getPW()
+
+        if not Config.encode_alg:
+            Config.encode_alg = 'AES:AES/CBC/PKCS5Padding:256'
+
         if not Config.jans_max_mem:
             Config.jans_max_mem = int(base.current_mem_size * .83 * 1000) # 83% of physical memory
 

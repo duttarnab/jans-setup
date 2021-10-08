@@ -173,12 +173,26 @@ class JansInstaller(BaseInstaller, SetupUtils):
         if not Config.encode_salt:
             Config.encode_salt= self.getPW() + self.getPW()
 
+        if not Config.encode_passw:
+            Config.encode_passw = self.getPW() + self.getPW()
+
+        if not Config.encode_iv:
+            Config.encode_iv = self.getPW() + self.getPW()
+
+        if not Config.encode_alg:
+            Config.encode_alg = 'AES:AES/CBC/PKCS5Padding:256'
+
         self.logIt("Making salt")
         salt_fn = os.path.join(Config.configFolder,'salt')
 
         try:
             salt_text = 'encodeSalt = {}'.format(Config.encode_salt)
-            self.writeFile(salt_fn, salt_text)
+            passw_text = 'encodePassw = {}'.format(Config.encode_passw)
+            iv_text = 'encodeIv = {}'.format(Config.encode_iv)
+            alg_text = 'encodeAlg = {}'.format(Config.encode_alg)
+            res_text = salt_text + '\n' + passw_text + '\n' + iv_text + '\n' + alg_text
+
+            self.writeFile(salt_fn, res_text)
         except:
             self.logIt("Error writing salt", True, True)
 
