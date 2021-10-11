@@ -2,6 +2,8 @@
 import os
 import sys
 import base64
+import configparser
+import re
 
 sys.path.append(os.path.join("%(install_dir)s", 'setup_app/pylib'))
 
@@ -22,7 +24,6 @@ details_dict = dict(config.items('dummy_section'))
 
 salt = None
 passw = None
-iv = None
 alg = None
 
 if 'encodesalt' in details_dict:
@@ -31,30 +32,27 @@ if 'encodesalt' in details_dict:
 if 'encodepassw' in details_dict:
     passw = details_dict['encodepassw']
 
-if 'encodeiv' in details_dict:
-    iv = details_dict['encodeiv']
-
 if 'encodealg' in details_dict:
     alg = details_dict['encodealg']
 
 def obscure(data=""):
-    engine = get_engine(passw, salt, iv, alg)
+    engine = get_engine(passw, salt, alg)
     en_data = engine.encrypt(data)
     return base64.b64encode(en_data).decode()
 
 def unobscure(s=""):
-    engine = get_engine(passw, salt, iv, alg)
+    engine = get_engine(passw, salt, alg)
     decrypted = engine.decrypt(base64.b64decode(s))
     return decrypted.decode()
 
-def get_engine(passw="", salt="", iv="", alg=""):
-   if alg is None or len(alg) == 0:
+def get_engine(passw="", salt="", alg=""):
+    if alg is None or len(alg) == 0:
         return triple_des(salt, ECB, pad=None, padmode=PAD_PKCS5)
     algSepArray = re.split(":", alg)
     if len(algSepArray) == 0 or algSepArray[0] == 'DES' or algSepArray[0] == '3DES' or algSepArray[0] == 'DESede':
         return triple_des(salt, ECB, pad=None, padmode=PAD_PKCS5)
     elif len(algSepArray) == 1 and algSepArray[0] == 'AES':
-        return AESCipher(AES.MODE_ECB, AESKeyLength.KL256, passw, salt, iv)
+        return AESCipher(AES.MODE_ECB, AESKeyLength.KL256, passw, salt)
     elif len(algSepArray) == 3 and algSepArray[0] == 'AES':
         mode = algSepArray[1]
         key_length = algSepArray[2]
@@ -74,7 +72,7 @@ def get_engine(passw="", salt="", iv="", alg=""):
             eff_mode = AES.MODE_ECB
         else:
             raise AttributeError("this mode isn't supported: mode = " + mode)
-        return AESCipher(eff_mode, eff_key_length, passw, salt, iv)
+        return AESCipher(eff_mode, eff_key_length, passw, salt)
     else:
         raise AttributeError("wrong alg value: alg = " + alg)
 

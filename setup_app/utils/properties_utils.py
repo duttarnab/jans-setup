@@ -128,9 +128,6 @@ class PropertiesUtils(SetupUtils):
         if not Config.encode_passw:
             Config.encode_passw = self.getPW() + self.getPW()
 
-        if not Config.encode_iv:
-            Config.encode_iv = self.getPW() + self.getPW()
-
         if not Config.encode_alg:
             Config.encode_alg = 'AES:AES/CBC/PKCS5Padding:256'
 

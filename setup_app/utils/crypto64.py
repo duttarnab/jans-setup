@@ -337,7 +337,7 @@ class Crypto64:
         if len(algSepArray) == 0 or algSepArray[0] == 'DES' or algSepArray[0] == '3DES' or algSepArray[0] == 'DESede' :
             return triple_des(Config.encode_salt, ECB, pad=None, padmode=PAD_PKCS5)
         elif len(algSepArray) == 1 and algSepArray[0] == 'AES':
-            return AESCipher(AES.MODE_ECB, AESKeyLength.KL256, Config.encode_passw, Config.encode_salt, Config.encode_iv)
+            return AESCipher(AES.MODE_ECB, AESKeyLength.KL256, Config.encode_passw, Config.encode_salt)
         elif len(algSepArray) == 3 and algSepArray[0] == 'AES':
             mode = algSepArray[1]
             key_length = algSepArray[2]
@@ -357,6 +357,6 @@ class Crypto64:
                 eff_mode = AES.MODE_ECB
             else:
                 raise AttributeError("this mode isn't supported: mode = " + mode)
-            return AESCipher(eff_mode, eff_key_length, Config.encode_passw, Config.encode_salt, Config.encode_iv) 
+            return AESCipher(eff_mode, eff_key_length, Config.encode_passw, Config.encode_salt) 
         else:
             raise AttributeError("wrong alg value: alg = " + alg)

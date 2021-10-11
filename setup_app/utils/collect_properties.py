@@ -35,7 +35,6 @@ class CollectProperties(SetupUtils, BaseInstaller):
             salt_prop = base.read_properties_file(salt_fn)
             Config.encode_salt = salt_prop['encodeSalt']
             Config.encode_passw = salt_prop['encodePassw']
-            Config.encode_iv = salt_prop['encodeIv']
             Config.encode_alg = salt_prop['encodeAlg']
 
         jans_prop = base.read_properties_file(Config.jans_properties_fn)

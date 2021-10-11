@@ -222,7 +222,6 @@ class Config:
         self.encoded_ox_ldap_pw = None
         self.encode_salt = None
         self.encode_passw = None
-        self.encode_iv = None
         self.encode_alg = None
         self.admin_inum = None
 
