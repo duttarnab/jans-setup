@@ -68,6 +68,8 @@ def get_engine(passw="", salt="", alg=""):
             raise AttributeError("wrong key_length value: key_length = " + key_length)
         if mode == 'AES/CBC/PKCS5Padding':
             eff_mode = AES.MODE_CBC
+        elif mode == 'AES/GCM/NoPadding':
+            eff_mode = AES.MODE_GCM
         elif mode == 'AES/ECB/PKCS5Padding':
             eff_mode = AES.MODE_ECB
         else:

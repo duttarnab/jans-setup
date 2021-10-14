@@ -177,7 +177,7 @@ class JansInstaller(BaseInstaller, SetupUtils):
             Config.encode_passw = self.getPW() + self.getPW()
 
         if not Config.encode_alg:
-            Config.encode_alg = 'AES:AES/CBC/PKCS5Padding:256'
+            Config.encode_alg = 'AES:AES/GCM/NoPadding:256'
 
         self.logIt("Making salt")
         salt_fn = os.path.join(Config.configFolder,'salt')
