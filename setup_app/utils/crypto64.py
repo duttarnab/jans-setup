@@ -12,6 +12,10 @@ from setup_app import paths
 from setup_app import static
 from setup_app.config import Config
 
+aes_cbc_p = 'AES/CBC/PKCS5Padding'
+aes_ecb_p = 'AES/ECB/PKCS5Padding'
+aes_gcm_np = 'AES/GCM/NoPadding'
+
 class Crypto64:
 
     def get_ssl_subject(self, ssl_fn):
@@ -337,10 +341,10 @@ class Crypto64:
 
     def get_engine(self):
         if Config.encode_alg is None or len(Config.encode_alg) == 0:
-            return self.get_aes_engine('AES/GCM/NoPadding', '256')        
+            return self.get_aes_engine(aes_gcm_np, '256')
         alg_sep_array = re.split(":", Config.encode_alg)
         elif len(alg_sep_array) == 0 or len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
-            return self.get_aes_engine('AES/GCM/NoPadding', '256')
+            return self.get_aes_engine(aes_gcm_np, '256')
         elif len(alg_sep_array) == 3 and alg_sep_array[0] == 'AES':
             return self.get_aes_engine(alg_sep_array[1], alg_sep_array[2])
         else:
@@ -357,11 +361,11 @@ class Crypto64:
             eff_key_length = AESKeyLength.KL256
         else:
             raise AttributeError("wrong key_length value: key_length = " + key_length)
-        if mode == 'AES/CBC/PKCS5Padding':
+        if mode == aes_cbc_p:
             eff_mode = AES.MODE_CBC
-        elif mode == 'AES/GCM/NoPadding':
+        elif mode == aes_gcm_np:
             eff_mode = AES.MODE_GCM
-        elif mode == 'AES/ECB/PKCS5Padding':
+        elif mode == aes_ecb_p:
             eff_mode = AES.MODE_ECB
         else:
             raise AttributeError("this mode isn't supported: mode = " + mode)
