@@ -5,8 +5,9 @@ import json
 
 from collections import OrderedDict
 
+from Crypto.Cipher import AES
 from setup_app.pylib.pyDes import triple_des, ECB, PAD_PKCS5
-from setup_app.pylib.pyAes import *
+from setup_app.pylib.pyAes import AESCipher, AESKeyLength
 
 from setup_app import paths
 from setup_app import static
@@ -338,32 +339,33 @@ class Crypto64:
     def get_engine(self):
         if Config.encode_alg is None or len(Config.encode_alg) == 0:
             return triple_des(Config.encode_salt, ECB, pad=None, padmode=PAD_PKCS5)
-        algSepArray = re.split(":", Config.encode_alg)
-        if len(algSepArray) == 0 or algSepArray[0] == 'DES' or algSepArray[0] == '3DES' or algSepArray[0] == 'DESede' :
+        alg_sep_array = re.split(":", Config.encode_alg)
+        if len(alg_sep_array) == 0 or alg_sep_array[0] == 'DES' or alg_sep_array[0] == '3DES' or alg_sep_array[0] == 'DESede' :
             return triple_des(Config.encode_salt, ECB, pad=None, padmode=PAD_PKCS5)
-        elif len(algSepArray) == 1 and algSepArray[0] == 'AES':
-            return AESCipher(AES.MODE_ECB, AESKeyLength.KL256, Config.encode_passw, Config.encode_salt)
-        elif len(algSepArray) == 3 and algSepArray[0] == 'AES':
-            mode = algSepArray[1]
-            key_length = algSepArray[2]
-            eff_mode = None
-            eff_key_length = None
-            if key_length == '128':
-                eff_key_length = AESKeyLength.KL128
-            elif key_length == '192':
-                eff_key_length = AESKeyLength.KL192
-            elif key_length == '256':
-                eff_key_length = AESKeyLength.KL256
-            else:
-                raise AttributeError("wrong key_length value: key_length = " + key_length)
-            if mode == 'AES/CBC/PKCS5Padding':
-                eff_mode = AES.MODE_CBC
-            if mode == 'AES/GCM/NoPadding':
-                eff_mode = AES.MODE_GCM
-            elif mode == 'AES/ECB/PKCS5Padding':
-                eff_mode = AES.MODE_ECB
-            else:
-                raise AttributeError("this mode isn't supported: mode = " + mode)
-            return AESCipher(eff_mode, eff_key_length, Config.encode_passw, Config.encode_salt) 
+        elif len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
+            return self.get_aes_engine('AES/GCM/NoPadding', '256')
+        elif len(alg_sep_array) == 3 and alg_sep_array[0] == 'AES':
+            return self.get_aes_engine(alg_sep_array[1], alg_sep_array[2])
         else:
             raise AttributeError("wrong alg value: alg = " + alg)
+
+    def get_aes_engine(self, mode, key_length):
+        eff_mode = None
+        eff_key_length = None
+        if key_length == '128':
+            eff_key_length = AESKeyLength.KL128
+        elif key_length == '192':
+            eff_key_length = AESKeyLength.KL192
+        elif key_length == '256':
+            eff_key_length = AESKeyLength.KL256
+        else:
+            raise AttributeError("wrong key_length value: key_length = " + key_length)
+        if mode == 'AES/CBC/PKCS5Padding':
+            eff_mode = AES.MODE_CBC
+        elif mode == 'AES/GCM/NoPadding':
+            eff_mode = AES.MODE_GCM
+        elif mode == 'AES/ECB/PKCS5Padding':
+            eff_mode = AES.MODE_ECB
+        else:
+            raise AttributeError("this mode isn't supported: mode = " + mode)
+        return AESCipher(eff_mode, eff_key_length, Config.encode_passw, Config.encode_salt) 
