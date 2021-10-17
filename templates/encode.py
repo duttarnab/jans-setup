@@ -8,7 +8,6 @@ import re
 sys.path.append(os.path.join("%(install_dir)s", 'setup_app/pylib'))
 
 from Crypto.Cipher import AES
-from pyDes import triple_des, ECB, PAD_PKCS5
 from pyAes import AESCipher, AESKeyLength
 
 saltFn = "%(configFolder)s/salt"
@@ -48,11 +47,9 @@ def unobscure(s=""):
 
 def get_engine(passw='', salt='', alg=''):
     if alg is None or len(alg) == 0:
-        return triple_des(salt, ECB, pad=None, padmode=PAD_PKCS5)
+        return get_aes_engine('AES/GCM/NoPadding', '256', passw, salt)
     alg_sep_array = re.split(":", alg)
-    if len(alg_sep_array) == 0 or alg_sep_array[0] == 'DES' or alg_sep_array[0] == '3DES' or alg_sep_array[0] == 'DESede':
-        return triple_des(salt, ECB, pad=None, padmode=PAD_PKCS5)
-    elif len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
+    if len(alg_sep_array) == 0 or len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
         return get_aes_engine('AES/GCM/NoPadding', '256', passw, salt)
     elif len(alg_sep_array) == 3 and alg_sep_array[0] == 'AES':
         return get_aes_engine(alg_sep_array[1], alg_sep_array[2], passw, salt)

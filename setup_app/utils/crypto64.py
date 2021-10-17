@@ -6,7 +6,6 @@ import json
 from collections import OrderedDict
 
 from Crypto.Cipher import AES
-from setup_app.pylib.pyDes import triple_des, ECB, PAD_PKCS5
 from setup_app.pylib.pyAes import AESCipher, AESKeyLength
 
 from setup_app import paths
@@ -338,11 +337,9 @@ class Crypto64:
 
     def get_engine(self):
         if Config.encode_alg is None or len(Config.encode_alg) == 0:
-            return triple_des(Config.encode_salt, ECB, pad=None, padmode=PAD_PKCS5)
+            return self.get_aes_engine('AES/GCM/NoPadding', '256')        
         alg_sep_array = re.split(":", Config.encode_alg)
-        if len(alg_sep_array) == 0 or alg_sep_array[0] == 'DES' or alg_sep_array[0] == '3DES' or alg_sep_array[0] == 'DESede' :
-            return triple_des(Config.encode_salt, ECB, pad=None, padmode=PAD_PKCS5)
-        elif len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
+        elif len(alg_sep_array) == 0 or len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
             return self.get_aes_engine('AES/GCM/NoPadding', '256')
         elif len(alg_sep_array) == 3 and alg_sep_array[0] == 'AES':
             return self.get_aes_engine(alg_sep_array[1], alg_sep_array[2])
