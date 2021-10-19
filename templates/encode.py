@@ -8,7 +8,7 @@ import re
 sys.path.append(os.path.join("%(install_dir)s", 'setup_app/pylib'))
 
 from Crypto.Cipher import AES
-from pyAes import AESCipher, AESKeyLength
+from pyAes import AESCipher, AESKeyLength, AES_CBC_P, AES_ECB_P, AES_GCM_NP
 
 saltFn = "%(configFolder)s/salt"
 f = open(saltFn)
@@ -25,10 +25,6 @@ details_dict = dict(config.items('dummy_section'))
 salt = None
 passw = None
 alg = None
-
-aes_cbc_p = 'AES/CBC/PKCS5Padding'
-aes_ecb_p = 'AES/ECB/PKCS5Padding'
-aes_gcm_np = 'AES/GCM/NoPadding'
 
 if 'encodesalt' in details_dict:
     salt = details_dict['encodesalt']
@@ -51,10 +47,10 @@ def unobscure(s=""):
 
 def get_engine(passw='', salt='', alg=''):
     if alg is None or len(alg) == 0:
-        return get_aes_engine(aes_gcm_np, '256', passw, salt)
+        return get_aes_engine(AES_GCM_NP, '256', passw, salt)
     alg_sep_array = re.split(":", alg)
     if len(alg_sep_array) == 0 or len(alg_sep_array) == 1 and alg_sep_array[0] == 'AES':
-        return get_aes_engine(aes_gcm_np, '256', passw, salt)
+        return get_aes_engine(AES_GCM_NP, '256', passw, salt)
     elif len(alg_sep_array) == 3 and alg_sep_array[0] == 'AES':
         return get_aes_engine(alg_sep_array[1], alg_sep_array[2], passw, salt)
     else:
@@ -71,11 +67,11 @@ def get_aes_engine(mode='', key_length='', passw='', salt=''):
         eff_key_length = AESKeyLength.KL256
     else:
         raise AttributeError("wrong key_length value: key_length = " + key_length)
-    if mode == aes_cbc_p:
+    if mode == AES_CBC_P:
         eff_mode = AES.MODE_CBC
-    elif mode == aes_gcm_np:
+    elif mode == AES_GCM_NP:
         eff_mode = AES.MODE_GCM
-    elif mode == aes_ecb_p:
+    elif mode == AES_ECB_P:
         eff_mode = AES.MODE_ECB
     else:
         raise AttributeError("this mode isn't supported: mode = " + mode)

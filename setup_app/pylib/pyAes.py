@@ -10,6 +10,10 @@ class AESKeyLength(Enum):
     KL192 = 192
     KL256 = 256
 
+AES_ECB_P = 'AES/ECB/PKCS5Padding'
+AES_CBC_P = 'AES/CBC/PKCS5Padding'
+AES_GCM_NP = 'AES/GCM/NoPadding'
+
 class AESCipher(object):
 
     def __init__(self, mode, key_len, passw, salt):
